@@ -95,7 +95,7 @@ const Signup = () => {
             });
             navigate("/login");
           } else {
-            toast.info("User already exists!", {
+            toast.info("Try Again", {
               position: "top-right",
               autoClose: 2000,
               hideProgressBar: false,
