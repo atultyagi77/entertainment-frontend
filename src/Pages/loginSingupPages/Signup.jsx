@@ -76,6 +76,16 @@ const Signup = () => {
         dispatch(userSignupDetailsReducer(newUserDetails));
         setTimeout(() => {
           if (getStatus === 201) {
+            // toast.success("Account Created Successfully !", {
+            //   position: "top-right",
+            //   autoClose: 2000,
+            //   hideProgressBar: false,
+            //   closeOnClick: true,
+            //   pauseOnHover: true,
+            //   draggable: true,
+            //   progress: undefined,
+            //   theme: "dark",
+            // });
             Swal.fire({
               title: 'Success!',
               text: 'Account Created Successfully !',
