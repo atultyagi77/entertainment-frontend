@@ -76,16 +76,6 @@ const Signup = () => {
         dispatch(userSignupDetailsReducer(newUserDetails));
         setTimeout(() => {
           if (getStatus === 201) {
-            // toast.success("Account Created Successfully !", {
-            //   position: "top-right",
-            //   autoClose: 2000,
-            //   hideProgressBar: false,
-            //   closeOnClick: true,
-            //   pauseOnHover: true,
-            //   draggable: true,
-            //   progress: undefined,
-            //   theme: "dark",
-            // });
             Swal.fire({
               title: 'Success!',
               text: 'Account Created Successfully !',
@@ -136,12 +126,22 @@ const Signup = () => {
 
   const signupWithFacebook = async (event) => {
     event.preventDefault();
-    alert("Coming Soon");
+    Swal.fire({
+      text: 'Coming Soon',
+      icon: 'info',
+      timer: 2000,
+      timerProgressBar: true
+    });
   };
 
   const signupWithGithub = async (event) => {
     event.preventDefault();
-    alert("Coming Soon");
+    Swal.fire({
+      text: 'Coming Soon',
+      icon: 'info',
+      timer: 2000,
+      timerProgressBar: true
+    });
   };
 
   const handleFocus = (fieldName) => {
