@@ -5,7 +5,6 @@ import facebook from "./assets/facebook.jpeg";
 import google from "./assets/google.png";
 import github from "./assets/github.png";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
 import { userSignupDetailsReducer } from "../../Redux/loginReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { signInWithPopup } from "firebase/auth";
@@ -15,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   AOS.init();
@@ -22,9 +22,11 @@ const Signup = () => {
   const dispatch = useDispatch();
   const getStatus = useSelector(state => state.userLoginDetails.newUserResponse.status);
 
+  // Memoize signup status to trigger re-renders when it changes
   useMemo(() => getStatus, [getStatus]);
 
   useEffect(() => {
+    // Set document title
     document.title = `Signup`;
   }, []);
 
@@ -40,11 +42,13 @@ const Signup = () => {
     password: "",
   });
 
+   // Regular expressions for email and password validation
   const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const isVaildEmail = emailRegex.test(newUserDetails.email);
   const isValid = passwordRegex.test(newUserDetails.password);
 
+   // Update state with form input data
   const setDataToNewUserDetailsHook = (event) => {
     const { name, value } = event.target;
     setNewUserDetails((preValue) => ({
@@ -53,9 +57,11 @@ const Signup = () => {
     }));
   };
 
+  // Send user details to backend
   const createUserDetailsSendToBackend = (event) => {
     event.preventDefault();
 
+    // Validate input fields
     if (
       newUserDetails.name === "" &&
       newUserDetails.email === "" &&
@@ -76,24 +82,17 @@ const Signup = () => {
         dispatch(userSignupDetailsReducer(newUserDetails));
         setTimeout(() => {
           if (getStatus === 201) {
-            // toast.success("Account Created Successfully !", {
-            //   position: "top-right",
-            //   autoClose: 2000,
-            //   hideProgressBar: false,
-            //   closeOnClick: true,
-            //   pauseOnHover: true,
-            //   draggable: true,
-            //   progress: undefined,
-            //   theme: "dark",
-            // });
-            Swal.fire({
-              title: 'Success!',
-              text: 'Account Created Successfully !',
-              icon: 'success',
-              timer: 1500,
-              timerProgressBar: true
+            toast.success("Account Created Successfully !", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
             });
-            navigate("/login");
+            navigate("/login"); // Redirect to login page after successful signup
           } else {
             toast.info("User already exists!", {
               position: "top-right",
@@ -111,6 +110,7 @@ const Signup = () => {
     }
   };
 
+  // Signup with Google
   const signupWithGoogle = async (event) => {
     event.preventDefault();
     try {
@@ -134,14 +134,27 @@ const Signup = () => {
     }
   };
 
+  // Placeholder for Facebook signup
   const signupWithFacebook = async (event) => {
     event.preventDefault();
-    alert("Coming Soon");
+    //alert for coming soon
+    Swal.fire({
+      text: 'Coming Soon',
+      icon: 'info',
+      timer: 2000,
+      timerProgressBar: true
+    });
   };
 
+  // Placeholder for GitHub signup
   const signupWithGithub = async (event) => {
     event.preventDefault();
-    alert("Coming Soon");
+    Swal.fire({
+      text: 'Coming Soon',
+      icon: 'info',
+      timer: 2000,
+      timerProgressBar: true
+    });
   };
 
   const handleFocus = (fieldName) => {
@@ -227,6 +240,7 @@ const Signup = () => {
                   Create Account
                 </button>
               </div>
+              {/* Signup with google, facebook and github */}
               <div className="flex flex-wrap justify-center mb-3 mx-auto">
                 <img
                   onClick={signupWithGoogle}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+
 // post request to user login 
 export const userLoginDetailsReducer = createAsyncThunk(
   "sendUserDetailsToBackend",
@@ -15,7 +16,6 @@ export const userLoginDetailsReducer = createAsyncThunk(
         data: loginData,
       };
       const userLoginDetails = await axios(options);
-      // console.log(userLoginDetails , "details")
       if (userLoginDetails.status === 200) {
         return userLoginDetails.data;
       }
@@ -24,15 +24,15 @@ export const userLoginDetailsReducer = createAsyncThunk(
     }
   }
 );
+
 // post request to create new User
 export const userSignupDetailsReducer = createAsyncThunk(
   "createNewUserDataSendToBackend",
   async (userData) => {
-    // console.log(userData)
     try {
       const options = {
         method: "POST",
-        url: `https://entertainment-backend-axzp.onrender.com/api/signup`,
+        url: `https://entertainment-backend-axzp.onrender.com/api/register`,
         headers: {
           accept: "application/json",
         },
@@ -40,7 +40,6 @@ export const userSignupDetailsReducer = createAsyncThunk(
       };
       const newUserDetails = await axios(options);
       if (newUserDetails.status === 201) {
-        console.log(newUserDetails, "clog");
         return newUserDetails.data;
       }
     } catch (error) {
@@ -48,6 +47,7 @@ export const userSignupDetailsReducer = createAsyncThunk(
     }
   }
 );
+
 const initialState = {
   loginType: "",
   loggedUserDetails: {
@@ -58,18 +58,16 @@ const initialState = {
     status: "",
   },
 };
+
 const loginUserSlice = createSlice({
   name: "UserLoginDetails",
   initialState,
   reducers: {
     // set user details login with google
     setLoggedUserData: (state, action) => {
-      console.log(action.payload);
-      console.log("setLOggegduser");
-      state.loginType = "google"
+      state.loginType = "google";
       state.loggedUserDetails = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
-      // console.log(setUserDetialsInLocalStorage , "setuser")
     },
   },
   // handle data from async function and set cookies 
@@ -89,31 +87,37 @@ const loginUserSlice = createSlice({
             loading: false,
             loginType: "database"
           };
-        }
+        } 
       })
       .addCase(userLoginDetailsReducer.pending, (state) => {
         state.loading = true;
-
       })
       .addCase(userLoginDetailsReducer.rejected, (state) => {
-
         state.loading = false;
-        // set user details in initalstate
       })
       .addCase(userSignupDetailsReducer.fulfilled, (state, action) => {
-        state.newUserResponse = action.payload;
-        state.newUserResponse.status = 201;
+        state.newUserResponse = {
+          ...action.payload,
+          status: 201,
+        };
         state.loading = false;
       })
       .addCase(userSignupDetailsReducer.pending, (state) => {
-        state.newUserResponse.status = 404;
+        state.newUserResponse = {
+          ...state.newUserResponse,
+          status: 404,
+        };
         state.loading = true;
       })
       .addCase(userSignupDetailsReducer.rejected, (state) => {
-        state.newUserResponse.status = 401;
+        state.newUserResponse = {
+          ...state.newUserResponse,
+          status: 401,
+        };
         state.loading = false;
       });
   },
 });
+
 export const { setLoggedUserData } = loginUserSlice.actions;
 export default loginUserSlice.reducer;
