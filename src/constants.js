@@ -1,0 +1,1 @@
+API_URI = "https://entertainment-backend-axzp.onrender.com/api"
