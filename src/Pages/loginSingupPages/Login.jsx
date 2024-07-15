@@ -61,7 +61,7 @@ const Login = () => {
         // Redirect to home page after successful login
         navigate("/");
       } else {
-        toast.error("Login failed");
+        toast.error("Login failed, Try Again");
       }
       // Hide spinner after API call completes
       setLoading(false); 
