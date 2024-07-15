@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import TheatersIcon from "@mui/icons-material/Theaters";
 import { Link, useNavigate } from "react-router-dom";
 import facebook from "./assets/facebook.jpeg";
@@ -20,18 +20,7 @@ const Signup = () => {
   AOS.init();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const getStatus = useSelector(state => state.userLoginDetails.newUserResponse.status);
-
-  useMemo(() => getStatus, [getStatus]);
-
-  useEffect(() => {
-    document.title = `Signup`;
-  }, []);
-
-  const styles = {
-    width: "50px",
-    height: "50px",
-  };
+  const getStatus = useSelector((state) => state.userLoginDetails.newUserResponse.status);
 
   const [focusedField, setFocusedField] = useState("");
   const [newUserDetails, setNewUserDetails] = useState({
@@ -45,6 +34,39 @@ const Signup = () => {
   const isVaildEmail = emailRegex.test(newUserDetails.email);
   const isValid = passwordRegex.test(newUserDetails.password);
 
+  useEffect(() => {
+    document.title = `Signup`;
+  }, []);
+
+  useEffect(() => {
+    if (getStatus === 201) {
+      Swal.fire({
+        title: "Success!",
+        text: "Account Created Successfully!",
+        icon: "success",
+        timer: 1500,
+        timerProgressBar: true,
+      });
+      navigate("/login");
+    } else if (getStatus === 409) {
+      toast.info("User already exists!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }, [getStatus, navigate]);
+
+  const styles = {
+    width: "50px",
+    height: "50px",
+  };
+
   const setDataToNewUserDetailsHook = (event) => {
     const { name, value } = event.target;
     setNewUserDetails((preValue) => ({
@@ -56,11 +78,7 @@ const Signup = () => {
   const createUserDetailsSendToBackend = (event) => {
     event.preventDefault();
 
-    if (
-      newUserDetails.name === "" &&
-      newUserDetails.email === "" &&
-      newUserDetails.password === ""
-    ) {
+    if (newUserDetails.name === "" || newUserDetails.email === "" || newUserDetails.password === "") {
       toast.info("Enter full details", {
         position: "top-right",
         autoClose: 2000,
@@ -74,29 +92,6 @@ const Signup = () => {
     } else {
       if (isValid && isVaildEmail) {
         dispatch(userSignupDetailsReducer(newUserDetails));
-        setTimeout(() => {
-          if (getStatus === 201) {
-            Swal.fire({
-              title: 'Success!',
-              text: 'Account Created Successfully !',
-              icon: 'success',
-              timer: 1500,
-              timerProgressBar: true
-            });
-            navigate("/login");
-          } else {
-            toast.info("User already exists!", {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
-          }
-        }, 1000);
       }
     }
   };
@@ -127,20 +122,20 @@ const Signup = () => {
   const signupWithFacebook = async (event) => {
     event.preventDefault();
     Swal.fire({
-      text: 'Coming Soon',
-      icon: 'info',
+      text: "Coming Soon",
+      icon: "info",
       timer: 2000,
-      timerProgressBar: true
+      timerProgressBar: true,
     });
   };
 
   const signupWithGithub = async (event) => {
     event.preventDefault();
     Swal.fire({
-      text: 'Coming Soon',
-      icon: 'info',
+      text: "Coming Soon",
+      icon: "info",
       timer: 2000,
-      timerProgressBar: true
+      timerProgressBar: true,
     });
   };
 
@@ -155,14 +150,11 @@ const Signup = () => {
           data-aos="fade-down"
           data-aos-easing="linear"
           data-aos-duration="1500"
-          className="flex mx-auto w-auto md:w-[60%]  justify-center items-center"
+          className="flex mx-auto w-auto md:w-[60%] justify-center items-center"
         >
-          <div className="container p-4  mt-20 rounded-lg my-8">
+          <div className="container p-4 mt-20 rounded-lg my-8">
             <div className="flex justify-center">
-              <TheatersIcon
-                className="bg-[#FC4747] rounded-lg"
-                style={styles}
-              />
+              <TheatersIcon className="bg-[#FC4747] rounded-lg" style={styles} />
             </div>
             <div className="bg-[#161D2F] rounded-xl">
               <div className="flex m-6 justify-center">
@@ -181,9 +173,7 @@ const Signup = () => {
                 />
               </div>
               {focusedField === "name" && !newUserDetails.name && (
-                <p className="flex justify-center text-red-500 mt-1">
-                  Name cannot be empty
-                </p>
+                <p className="flex justify-center text-red-500 mt-1">Name cannot be empty</p>
               )}
               <div className="flex mx-5 mt-5 justify-center">
                 <input
@@ -197,9 +187,7 @@ const Signup = () => {
                 />
               </div>
               {!isVaildEmail && (
-                <p className="flex justify-center text-red-500 mt-1">
-                  Email is required!
-                </p>
+                <p className="flex justify-center text-red-500 mt-1">Email is required!</p>
               )}
 
               <div className="flex mx-5 mt-5 justify-center">
