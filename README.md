@@ -1,4 +1,4 @@
-# Movies React App
+# Entertainment App
 
 This project is a React application that displays trending movies and allows users to bookmark their favorite movies. It integrates with The Movie Database (TMDb) API to fetch movie data and manages user bookmarks using Redux for state management.
 
@@ -16,35 +16,39 @@ Clone the repository and navigate into the project directory:
 
 ```bash
 git clone https://github.com/atultyagi77/entertainment-frontend.git
-
+```
 cd entertainment-frontend
 
-Install dependencies:
+# Install dependencies:
 
 ```bash
 npm install
+```
 
-Running the Application
+# Running the Application
 You can run the application in development mode:
-bash
+```bash
 npm start
+```
 
-Building for Production
+# Building for Production
 To build the app for production:
 
-bash
+```bash
 npm run build
+```
 This will create a build folder with optimized production-ready code. You can deploy this folder to a web server.
 
-Customization and Advanced Configuration
+# Customization and Advanced Configuration
 If you need to customize the build configuration, you can eject the project:
-bash
+```bash
 npm run eject
+```
 
-Additional Resources
+# Additional Resources
 
 Create React App Documentation
 React Documentation
 
-Troubleshooting
+# Troubleshooting
 If you encounter issues, refer to the Create React App Troubleshooting Guide.
