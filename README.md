@@ -15,8 +15,9 @@ Make sure you have Node.js and npm installed on your machine.
 Clone the repository and navigate into the project directory:
 
 ```bash
-git clone <repository_url>
-cd <project_directory>
+git clone https://github.com/atultyagi77/entertainment-frontend.git
+
+cd entertainment-frontend
 
 Install dependencies:
 
@@ -25,23 +26,25 @@ npm install
 
 Running the Application
 You can run the application in development mode:
-```bash
+bash
 npm start
 
 Building for Production
 To build the app for production:
 
-```bash
+bash
 npm run build
 This will create a build folder with optimized production-ready code. You can deploy this folder to a web server.
 
 Customization and Advanced Configuration
 If you need to customize the build configuration, you can eject the project:
-```bash
+bash
 npm run eject
 
 Additional Resources
+
 Create React App Documentation
 React Documentation
+
 Troubleshooting
 If you encounter issues, refer to the Create React App Troubleshooting Guide.
