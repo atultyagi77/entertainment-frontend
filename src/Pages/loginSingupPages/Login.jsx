@@ -7,7 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { ToastContainer, toast } from "react-toastify"; //import alert
 import "react-toastify/dist/ReactToastify.css";
-import CircularProgress from '@mui/material/CircularProgress'; // import spinner
+import CircularProgress from "@mui/material/CircularProgress"; // import spinner
 
 const Login = () => {
   AOS.init();
@@ -19,6 +19,12 @@ const Login = () => {
   const logedUser = useSelector(
     (state) => state.userLoginDetails.loggedUserDetails
   );
+
+  if (logedUser.status === 200) {
+    toast.success("Login Successfully");
+    // Redirect to home page after successful login
+    navigate("/");
+  }
 
   useEffect(() => {
     document.title = `Login`;
@@ -60,11 +66,9 @@ const Login = () => {
         toast.success("Login Successfully");
         // Redirect to home page after successful login
         navigate("/");
-      } else {
-        toast.error("Login failed, Try Again");
       }
       // Hide spinner after API call completes
-      setLoading(false); 
+      setLoading(false);
     }, 800);
   };
 
@@ -83,7 +87,10 @@ const Login = () => {
         >
           <div className="container p-4 mt-28 rounded-lg my-8">
             <div className="flex justify-center">
-              <TheatersIcon className="bg-[#FC4747] rounded-lg" style={styles} />
+              <TheatersIcon
+                className="bg-[#FC4747] rounded-lg"
+                style={styles}
+              />
             </div>
             <div className="bg-[#161D2F] rounded-xl">
               <div className="flex m-6 justify-center">
@@ -131,7 +138,11 @@ const Login = () => {
                   disabled={loading} // Disable button when loading
                 >
                   {/* Show spinner or button text */}
-                  {loading ? <CircularProgress size={24} color="inherit" /> : "Login To Your Account"}  
+                  {loading ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Login To Your Account"
+                  )}
                 </button>
               </div>
               <div className="flex justify-center">
