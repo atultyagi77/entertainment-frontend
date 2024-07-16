@@ -66,10 +66,12 @@ const Login = () => {
         toast.success("Login Successfully");
         // Redirect to home page after successful login
         navigate("/");
+      } else {
+        toast.error("Login failed, Try Again");
       }
       // Hide spinner after API call completes
       setLoading(false);
-    }, 800);
+    }, 2000);
   };
 
   const handleFocus = (fieldName) => {
