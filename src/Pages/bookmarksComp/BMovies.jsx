@@ -72,7 +72,7 @@ const BMovies = () => {
         hover:border-blue-700 py-2 rounded-2xl ' />
         </div>
         <div className="flex justify-center ">
-          <h1 className='text-zinc-200 text-2xl' >Bookmarked Movies
+          <h1 className='text-zinc-200 text-2xl mt-[100px]' >Bookmarked Movies
           </h1></div>
         <section data-aos="zoom-in-up" data-aos-easing="linear"
           data-aos-duration="1500" className='flex my-12 flex-wrap mx-16' >
